@@ -42,7 +42,6 @@ print(showIn(woman))
 print(showIn(cat))
 print(showIn(dog))
 print(showIn(catWoman))
-print
 // ======== OUTPUT ========
 /* Use print(message) for output.
    Default tag for message is <pre>. Use print(message,'div') to change containing element tag.

@@ -1,78 +1,67 @@
 class Inhabitant {
-  constructor(name, gender, friends) {
+  constructor(name, gender) {
     this.resident = this.constructor.name;
     this.name = name;
     this.gender = gender;
-    this.friends = friends;
   }
-  toGetFriends() {
-    return this.friends.join(" ");
-  }
-  toShowInfo() {
+  toSring() {
     return Object.entries(this)
       .map(([prop, value]) => `${prop}: <b>${value}</b>`)
-      .join(" ");
-  }
-  toString() {
-    return `${this.toShowInfo()}`;
+      .join("; ");
   }
 }
+const SayCatMixin = superclass =>
+  class extends superclass {
+    constructor(name, gender, saying) {
+      super(name, gender, saying);
+      this.saying = "Meow";
+    }
+  };
 class Human extends Inhabitant {
-  constructor(name, gender, friends, saying) {
-    super(name, gender, friends);
+  constructor(name, gender, saying) {
+    super(name, gender);
     this.hands = 2;
     this.legs = 2;
     this.saying = saying;
   }
 }
-
 class Man extends Human {
-  constructor(name, friends, saying) {
-    super(name, "male", friends, saying);
+  constructor(name, saying) {
+    super(name, "male", saying);
   }
 }
-
 class Woman extends Human {
-  constructor(name, friends, saying) {
-    super(name, "female", friends, saying);
+  constructor(name, saying) {
+    super(name, "female", saying);
   }
 }
-
 class Animal extends Inhabitant {
-  constructor(name, gender, friends, saying) {
-    super(name, gender, friends);
+  constructor(name, gender, saying) {
+    super(name, gender);
     this.paws = 4;
     this.saying = saying;
   }
 }
 class Dog extends Animal {
-  constructor(name, gender, friends, saying) {
-    super(name, gender, friends, saying);
+  constructor(name, gender, saying) {
+    super(name, gender, saying);
   }
 }
-
-class Cat extends Animal {
-  constructor(name, gender, friends, saying) {
-    super(name, gender, friends, saying);
+class Cat extends SayCatMixin(Animal) {
+  constructor(name, gender) {
+    super(name, gender);
   }
 }
-
-class catWoman extends Woman {
-  constructor(name, friends, saying) {
-    super(name, friends, saying);
+class catWoman extends SayCatMixin(Woman) {
+  constructor(name, saying) {
+    super(name, saying);
   }
 }
-
-let inhabitant = [
-  new Man(
-    "Jack",
-    ["Sara", "Selina", "Archi"],
-    "I hope you're having a wonderful day"
-  ),
-  new Woman("Sara", ["Felix", "Jack"], "Hey Jack, good to see you! "),
-  new Dog("Archi", "male", ["everyone"], "Woof-woof!"),
-  new Cat("Felix", "male", ["Sara"], "Meow-meow"),
-  new catWoman("Selina", ["I'm unfriendly person"], "Meow-meow")
+let inhabitants = [
+  new Man("Jack", "I hope you're having a wonderful day"),
+  new Woman("Sara", "Hey Jack, good to see you!"),
+  new Dog("Archi", "male", "Woof-woof!"),
+  new Cat("Felix", "male"),
+  new catWoman("Selina")
 ];
-
-inhabitant.forEach(e => print(e.toString()));
+inhabitants.forEach(i => print(i.toSring()));
